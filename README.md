@@ -6,7 +6,7 @@
 
 前端+后端：[https://github.com/wuledi/oj](https://github.com/wuledi/oj)
 
-## 功能特点
+## 功能
 
 - **安全认证与用户管理**：基于 Spring Security + JWT 实现完善的用户注册、登录、权限控制体系
 - **代码沙箱**：基于 Docker 容器技术的强隔离代码执行环境，确保系统安全
@@ -24,7 +24,7 @@
 | **核心框架**  | Spring Boot 3.5.5, Spring Cloud Alibaba 2023.0.3.3 |
 | **安全认证**  | Spring Security, JWT                               |
 | **数据持久化** | MySQL, MyBatis-Plus, Elasticsearch                 |
-| **中间件**   | Redis , RabbitMQ , Nacos                           |
+| **中间件**   | Redis , Kafka                                      |
 | **容器技术**  | Docker                                             |
 | **AI 集成** | Spring AI Alibaba                                  |
 | **服务治理**  | Spring Cloud Gateway, OpenFeign                    |
