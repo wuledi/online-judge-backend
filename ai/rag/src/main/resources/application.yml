@@ -1,0 +1,20 @@
+server: # 服务器配置
+  port: 28085  # 端口
+  servlet: # 新增 servlet 节点
+    context-path: / # 应用上下文路径
+spring:
+  application:
+    name: ai-rag
+  profiles:
+    active: local
+  ai:
+    zhipuai:
+      api-key: xxxx
+      embedding:
+        options:
+          model: Embedding-3
+
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/ai_agent
+    username: postgres
+    password: xxxx

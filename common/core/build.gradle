@@ -1,0 +1,28 @@
+jar {
+    enabled = true
+    // 如果开发者有需要也可以自定一些打包后的配置项,例如: 后缀、版本号、执行类
+    archiveClassifier = '' // 打包文件追加一个后缀
+    archiveVersion = project_version // 使用项目版本作为打包版本
+    // mainClassName = 'com.springboot.StartApplication' // 程序启动类,运行主类(新版可以自动匹配)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE // 忽略重复文件
+}       // 打包为JAR文件
+bootJar { enabled = false }      // 关闭bootJar任务
+javadocJar { enabled = false } // 关闭打包JavaDoc任务
+javadocTask { enabled = false }    // 关闭javadocTask
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+
+    implementation 'jakarta.annotation:jakarta.annotation-api'
+    implementation 'jakarta.validation:jakarta.validation-api'
+
+
+    // Java实现的ASCII艺术生成库，可将文本转换为多种风格的ASCII艺术字体
+    implementation 'com.github.lalyos:jfiglet'
+    implementation 'com.github.ben-manes.caffeine:caffeine' // Caffeine依赖: 用于缓存
+
+    // Apache Commons Lang工具包，提供字符串、数组、日期等操作的实用方法
+    implementation 'org.apache.commons:commons-lang3'
+
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+}

@@ -1,0 +1,5 @@
+spring: # Spring配置
+  application: # 应用配置
+    name: service-meta-search # 应用名称
+  profiles:
+    active: local # 激活的配置文件

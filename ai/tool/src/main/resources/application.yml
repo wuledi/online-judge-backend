@@ -1,0 +1,22 @@
+server: # 服务器配置
+  port: 28083  # 端口
+  servlet: # 新增 servlet 节点
+    context-path: / # 应用上下文路径
+spring: # Spring配置
+  application: # 应用配置
+    name: ai-tool # 应用名称
+  profiles:
+    active: local
+wuledi:
+  ai:
+    tools:
+      yuque:
+        auth-token: xxxx
+      searchapi:
+        api-key: xxxx
+  sdk:
+    codesandbox:
+      gateway-host: https://api.url-hub.com
+      access-key: xxxx
+      secret-key: xxxx
+      version: 1.0.0

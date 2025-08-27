@@ -1,0 +1,19 @@
+dependencies {
+    implementation project(':common:core')
+    implementation project(":common:web")
+    implementation project(":middleware:redis")
+    // SpringBoot依赖
+    implementation 'org.springframework.boot:spring-boot-starter-web' // Web依赖,用于web开发
+    implementation 'org.springframework.boot:spring-boot-starter-aop' // AOP依赖,用于AOP编程
+    // Spring Security：用于保护Spring应用程序的认证、授权和认证管理
+    implementation 'org.springframework.boot:spring-boot-starter-security' // Spring Security依赖
+    // Spring Data Redis启动器：提供对Redis的标准化操作支持，包含Lettuce客户端，默认集成Spring Boot自动配置
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    // 分布式锁 -- 用于分布式场景下的并发控制Redis,能像本地操作集合一样操作Redis
+    implementation 'org.redisson:redisson-spring-boot-starter' // Redisson依赖: 用于分布式锁
+
+    // JWT（JSON Web Token）实现，用于实现用户认证和授权
+    implementation 'io.jsonwebtoken:jjwt-api' // 提供 JWT 的接口和抽象类
+    implementation 'io.jsonwebtoken:jjwt-impl' // 实现 JWT 的核心逻辑（签名、解析等）
+    implementation 'io.jsonwebtoken:jjwt-gson' // 支持 Gson 库的 JSON 序列化/反序列化
+}

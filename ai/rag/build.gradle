@@ -1,0 +1,18 @@
+dependencies {
+
+    // SpringBoot依赖
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+//    implementation 'org.springframework.ai:spring-ai-starter-vector-store-pgvector'  // 自动整合 PGVector 向量存储
+
+    // Spring AI依赖
+    implementation 'org.springframework.ai:spring-ai-rag'
+    implementation 'org.springframework.ai:spring-ai-markdown-document-reader'
+    implementation 'org.springframework.ai:spring-ai-advisors-vector-store'
+    implementation 'org.springframework.ai:spring-ai-pgvector-store' // PGVector 向量存储依赖
+    implementation 'org.springframework.ai:spring-ai-starter-model-zhipuai'
+
+    // 手动整合 PGVector 向量存储
+    implementation 'org.postgresql:postgresql'
+}

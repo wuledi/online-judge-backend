@@ -1,0 +1,32 @@
+dependencies {
+    implementation project(':common:core')
+    implementation project(":common:web")
+    implementation project(':common:security')
+    implementation project(':ai:tool')
+    implementation project(':ai:memory')
+
+    // SpringBoot依赖
+    implementation 'org.springframework.boot:spring-boot-starter-web' // Web依赖,用于web开发
+
+    implementation 'org.springframework.ai:spring-ai-starter-mcp-client'
+
+    // Spring Ai Alibaba
+    implementation 'com.alibaba.cloud.ai:spring-ai-alibaba-bom'
+    implementation 'com.alibaba.cloud.ai:spring-ai-alibaba-starter-dashscope'
+
+    // ---- Swagger相关依赖 ----
+    // Swagger接口文档注解，用于标注API元数据
+    // https://github.com/swagger-api/swagger-core/
+    implementation 'io.swagger.core.v3:swagger-annotations'
+    // Swagger UI界面，提供在线API文档查看和调试功能
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui'
+
+    // Apache Commons Lang工具包，提供字符串、数组、日期等操作的实用方法
+    // https://commons.apache.org/proper/commons-lang/javadocs/api-release/index.html
+    implementation 'org.apache.commons:commons-lang3'
+    implementation 'commons-io:commons-io'  // Apache Commons IO工具包，用于文件、流、字符串等操作
+
+
+    // Reactor测试工具包，用于测试Reactor流
+    implementation 'io.projectreactor:reactor-test'
+}

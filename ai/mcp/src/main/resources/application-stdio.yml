@@ -1,0 +1,17 @@
+server: # 服务器配置
+  port: 28084  # 端口
+  servlet: # 新增 servlet 节点
+    context-path: / # 应用上下文路径
+spring:
+  ai:
+    mcp:
+      server:
+        name: ai-mcp
+        version: 0.0.1
+        type: SYNC
+        # stdio
+        stdio: true
+  # stdio
+  main:
+    web-application-type: none
+    banner-mode: off

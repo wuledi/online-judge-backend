@@ -1,0 +1,30 @@
+server: # 服务器配置
+  port: 18084  # 端口
+  servlet: # 新增 servlet 节点
+    context-path: / # 应用上下文路径
+    session: # session配置:
+      cookie: # cookie配置
+        max-age: 2592000 # cookie最大存活时间，单位: 秒
+spring: # Spring配置
+  application: # 应用配置
+    name: middleware-redis # 应用名称
+  profiles:
+    active: local
+  session: # session配置
+    timeout: 2592000 # session超时时间，单位: 秒
+    redis: # redis配置
+      namespace: spring:session:wuledi # Redis 中的命名空间
+  data: # 数据配置
+    redis: # redis配置
+      host: 127.0.0.1 # 主机
+      port: 6379 # 端口
+      password: xxxx # 密码
+      database: 0 # 数据库
+      lettuce: # lettuce配置
+        pool: # 连接池配置
+          max-active: 10 # 最大连接数
+          max-idle: 5 # 最大空闲连接数
+          min-idle: 0 # 最小空闲连接数
+          max-wait: 5s # 最大等待时间
+          time-between-eviction-runs: 2000    # 每2s回收一次空闲连接
+      connect-timeout: 2000ms

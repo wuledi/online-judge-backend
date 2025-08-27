@@ -1,0 +1,44 @@
+dependencies {
+    implementation project(':common:core')
+    implementation project(":common:web")
+    implementation project(':common:security')
+    implementation project(':orm:mybatis-plus')
+    implementation project(':middleware:redis')
+    implementation project(':base:notification')
+    implementation project(':base:storage')
+
+
+    // SpringBoot依赖
+    implementation 'org.springframework.boot:spring-boot-starter-web' // Web依赖,用于web开发
+    // Spring Security：用于保护Spring应用程序的认证、授权和认证管理
+    implementation 'org.springframework.boot:spring-boot-starter-security' // Spring Security依赖
+
+    // ---- MyBatisPlus相关依赖 ----
+    // MyBatisPlus核心依赖，集成Spring Boot 3，提供增强的MyBatis功能
+    // https://baomidou.com/
+    implementation 'com.baomidou:mybatis-plus-spring-boot3-starter'
+    implementation 'com.baomidou:mybatis-plus-jsqlparser'
+    implementation 'com.alibaba:druid-spring-boot-starter' // Druid数据库连接池依赖
+    runtimeOnly 'com.mysql:mysql-connector-j' // MySQL数据库驱动，用于JDBC连接MySQL数据库
+    implementation 'org.mapstruct:mapstruct' // MapStruct映射工具
+    implementation 'org.mapstruct:mapstruct-processor' // MapStruct映射工具
+    annotationProcessor 'org.mapstruct:mapstruct-processor'
+
+
+    // ---- Swagger相关依赖 ----
+    // Swagger接口文档注解，用于标注API元数据
+    implementation 'io.swagger.core.v3:swagger-annotations'
+    // Swagger UI界面，提供在线API文档查看和调试功能
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui'
+
+    // Apache Commons Lang工具包，提供字符串、数组、日期等操作的实用方法
+    // https://commons.apache.org/proper/commons-lang/javadocs/api-release/index.html
+    implementation 'org.apache.commons:commons-lang3'
+    implementation 'commons-io:commons-io'  // Apache Commons IO工具包，用于文件、流、字符串等操作
+
+    // 分布式锁 -- 用于分布式场景下的并发控制Redis,能像本地操作集合一样操作Redis
+    implementation 'org.redisson:redisson-spring-boot-starter' // Redisson依赖: 用于分布式锁
+}
+
+
+

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 增强SEO和社交媒体分享 -->
+    <title>版权声明 | 知行录</title>
+    <meta name="description" content="Wuledi Inc. 的官方版权声明页面，包含项目版本信息、开发者联系方式和技术支持详情">
+    <meta name="keywords" content="Spring Boot, 版权声明, 项目版本, 技术支持">
+
+    <!-- Open Graph协议 -->
+    <meta property="og:title" content="版权声明 | 知行录">
+    <meta property="og:description" content="Wuledi Inc. 的官方版权声明页面">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/copyright">
+
+    <!-- 预连接和图标优化 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+
+    <!-- 样式表 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/copyright.css">
+
+    <!-- 结构化数据 (JSON-LD) -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Wuledi Inc.",
+            "url": "https://wuledi.com",
+            "email": "mail@wuledi.com",
+            "legalName": "Wuledi Inc.",
+            "sameAs": ["https://github.com/wuledi"]
+        }
+    </script>
+</head>
+
+<body>
+<div class="container">
+    <header class="header" role="banner">
+        <div class="logo">
+            <h1>知行录</h1>
+        </div>
+    </header>
+
+    <main class="content" role="main">
+        <div class="copyright">
+            <p>©{{ currentYear }} Wuledi Inc. All rights reserved.</p>
+        </div>
+
+        <div class="project-info">
+            <p>项目版本：v1.0.0</p>
+            <p>开发者：<a href="mailto:dev@wuledi.com">wuledi</a></p>
+        </div>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <p>技术支持：<a href="https://wuledi.com" rel="noopener noreferrer">Wuledi Inc.</a></p>
+        <div class="social-links">
+            <a href="https://github.com/wuledi" target="_blank" rel="noopener noreferrer" aria-label="GitHub主页">
+                <i class="fab fa-github" aria-hidden="true">wuledi</i>
+            </a>
+        </div>
+    </footer>
+</div>
+
+<script>
+    document.querySelector('.copyright p').textContent = `©${new Date().getFullYear()} Wuledi Inc. All rights reserved.`;
+</script>
+
+</body>
+</html>

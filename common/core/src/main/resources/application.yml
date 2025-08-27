@@ -1,0 +1,9 @@
+server: # 服务器配置
+  port: 18081  # 端口
+  servlet: # 新增 servlet 节点
+    context-path: / # 应用上下文路径
+spring: # Spring配置
+  application: # 应用配置
+    name: common-core # 应用名称
+  profiles:
+    active: local

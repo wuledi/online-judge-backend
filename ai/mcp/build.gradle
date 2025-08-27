@@ -1,0 +1,8 @@
+dependencies {
+
+    // Spring AI依赖
+    implementation 'org.springframework.ai:spring-ai-starter-mcp-server'
+
+    // Hutool 工具包
+    implementation 'cn.hutool:hutool-all'
+}

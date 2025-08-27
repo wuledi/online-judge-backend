@@ -1,0 +1,5 @@
+dependencies {
+    // Spring Boot邮件发送模块：集成JavaMailSender，提供发送邮件（含HTML、附件等）的简化配置
+    // https://springdoc.cn/spring-boot-email/
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+}

@@ -1,0 +1,11 @@
+spring: # Spring配置
+  application: # 应用配置
+    name: sdk-code-sandbox-sdk # 应用名称
+  profiles: # 环境配置
+    active: local # 激活的环境
+wuledi:
+  sdk:
+    codesandbox:
+      gateway-host: https://api.url-hub.com
+      access-key: xxxx
+      secret-key: xxxx

@@ -1,0 +1,10 @@
+dependencies {
+    // SpringBoot依赖
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Hutool全功能工具包：提供丰富的工具类（日期、字符串、文件、加密等），简化Java开发
+    implementation 'cn.hutool:hutool-all'
+
+    implementation 'com.qiniu:qiniu-java-sdk' // 引入七牛云SDK
+    implementation 'com.qcloud:cos_api' // 腾讯云COS依赖
+}

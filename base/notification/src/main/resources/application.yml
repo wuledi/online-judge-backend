@@ -1,0 +1,19 @@
+server: # 服务器配置
+  port: 18087  # 端口
+  servlet: # 新增 servlet 节点
+    context-path: / # 应用上下文路径
+
+spring: # Spring配置
+  application: # 应用配置
+    name: base-notification # 应用名称
+  profiles:
+    active: local
+  mail: # 邮件配置
+    host: smtp.qq.com        # SMTP主机地址
+    username: xxxx@qq.com     # 用户名
+    password: xxxx     # 生成的密码（不是用户密码）
+    properties: # JavaMail属性
+      mail.smtp.auth: true      # 取用认证
+      mail.smtp.starttls.enabled: true   # 启用加密连接
+      mail.smtp.starttls.required: true   # 启用加密连接
+    default-encoding: UTF-8 # 默认编码

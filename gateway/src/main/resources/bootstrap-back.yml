@@ -1,0 +1,38 @@
+spring: # Spring配置
+  application:
+    name: gateway # 应用名称
+  profiles:
+    active: local # 开发环境
+  cloud: # Spring Cloud配置
+    nacos: # Nacos注册中心
+      server-addr: 8.152.100.142:8848 # Nacos地址
+      username: nacos
+      password: Lq14792443379
+      config: # Nacos配置中心
+        enabled: true # 开启配置中心
+        namespace: e36b1a2f-c2fe-4696-9616-8bc68158fe9b # 命名空间
+        group: WULEDI_MICRO_CLOUD_GROUP # 分组
+        cluster-name: ${spring.application.name}Cluster # 集群名称
+        prefix: properties # 配置前缀
+      discovery: # 发现服务
+        weight: 80 # 权重
+        enabled: true # 开启服务发现
+        service: ${spring.application.name} # Nacos服务名称
+        group: WULEDI_MICRO_CLOUD_GROUP # 分组
+        cluster-name: ${spring.application.name}Cluster # 集群名称
+        namespace: e36b1a2f-c2fe-4696-9616-8bc68158fe9b # 命名空间
+        metadata:
+          version: 1.0.0 # 版本号
+          url: https://wuledi.com
+          author: wuledi # 作者
+          description: ${spring.application.name}服务 # 描述
+        register-enabled: true
+#  config: # 配置中心
+#    import: # 导入配置文件:来自nacos,会覆盖application.yml的配置
+#      - nacos:${spring.application.name}-${spring.profiles.active}.properties?refreshEnabled=true
+    sentinel: # sentinel配置
+      eager: true # 是否立即加载
+      block-page: /errors/block_handler     # 拦截处理路径，todo 拆分common模块
+      transport: # 通信配置
+        port: 8719 # Sentinel通信端口
+        dashboard: 8.152.100.142:8858 # Sentinel控制面板

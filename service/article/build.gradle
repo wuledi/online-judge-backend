@@ -1,0 +1,46 @@
+dependencies {
+    implementation project(':common:core')
+    implementation project(":common:web")
+    implementation project(':common:security')
+    implementation project(':orm:mybatis-plus')
+    implementation project(':middleware:redis')
+    implementation project(':service:dynamic-task') // 任务子模块依赖
+
+    // SpringBoot依赖
+    implementation 'org.springframework.boot:spring-boot-starter-web' // Web依赖,用于web开发
+    // Spring Security：用于保护Spring应用程序的认证、授权和认证管理
+    implementation 'org.springframework.boot:spring-boot-starter-security' // Spring Security依赖
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    //  Elasticsearch相关依赖
+    // https://docs.spring.io/spring-data/elasticsearch/docs/5.2.12/api/
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch' // Elasticsearch依赖 8.18.1
+
+    // ------ 定时任务相关依赖 ----
+    // ShedLock核心库：提供分布式任务调度锁定功能，确保分布式环境下的定时任务不重复执行
+    implementation 'net.javacrumbs.shedlock:shedlock-spring'
+    // ShedLock Redis集成：使用Redis作为ShedLock的分布式锁存储后端，配合Spring框架使用
+    implementation 'net.javacrumbs.shedlock:shedlock-provider-redis-spring'
+    // Apache Commons Pool2：用于管理对象池，实现对象池的创建、获取、释放等操作
+    implementation 'org.apache.commons:commons-pool2'
+
+    // ---- MyBatisPlus相关依赖 ----
+    // MyBatisPlus核心依赖，集成Spring Boot 3，提供增强的MyBatis功能
+    // https://baomidou.com/
+    implementation 'com.baomidou:mybatis-plus-spring-boot3-starter'
+    implementation 'com.baomidou:mybatis-plus-jsqlparser'
+    implementation 'com.alibaba:druid-spring-boot-starter' // Druid数据库连接池依赖
+    runtimeOnly 'com.mysql:mysql-connector-j' // MySQL数据库驱动，用于JDBC连接MySQL数据库
+    implementation 'org.mapstruct:mapstruct' // MapStruct映射工具
+    implementation 'org.mapstruct:mapstruct-processor' // MapStruct映射工具
+    annotationProcessor 'org.mapstruct:mapstruct-processor'
+
+    implementation 'org.apache.commons:commons-lang3'
+
+    // ---- Swagger相关依赖 ----
+    implementation 'io.swagger.core.v3:swagger-annotations'
+
+    // Hutool全功能工具包：提供丰富的工具类（日期、字符串、文件、加密等），简化Java开发
+    // https://www.hutool.cn/docs
+    implementation 'cn.hutool:hutool-all'
+
+}

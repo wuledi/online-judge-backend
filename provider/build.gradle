@@ -1,0 +1,35 @@
+bootJar {  // 是由SpringBoot提供的任务名称
+    // 如果开发者有需要也可以自定一些打包后的配置项,例如: 后缀、版本号、执行类
+    archiveClassifier = 'wuledi' // 打包文件追加一个后缀
+    archiveBaseName = 'online-judge-backend' // 设置打包文件的名称
+    archiveVersion = project_version // 使用项目版本作为打包版本
+    // mainClassName = 'com.springboot.StartApplication' // 程序启动类,运行主类(新版可以自动匹配)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE // 忽略重复文件
+}
+
+
+dependencies {
+    implementation project(":common:core")
+    implementation project(":common:web")
+    implementation project(":common:security")
+    implementation project(":base:notification")
+    implementation project(":base:storage")
+    implementation project(":middleware:kafka")
+    implementation project(":middleware:redis")
+    implementation project(":orm:mybatis-plus")
+    implementation project(":service:user")
+    implementation project(":service:chat")
+    implementation project(":service:article")
+    implementation project(":service:dynamic-task")
+    implementation project(":service:interface-info")
+    implementation project(":service:code-sandbox")
+    implementation project(":service:question")
+    implementation project(":service:judge")
+    implementation project(":service:meta-search")
+    implementation project(":ai:dashscope")
+    implementation project(":ai:tool")
+    implementation project(":ai:memory")
+
+    // SpringBoot依赖
+    implementation 'org.springframework.boot:spring-boot-starter'
+}

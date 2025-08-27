@@ -1,0 +1,30 @@
+server: # 服务器配置
+  port: 8082  # 端口
+  servlet: # 新增 servlet 节点
+    context-path: / # 应用上下文路径
+spring: # Spring配置
+  application: # 应用配置
+    name: base-storage  # 应用名称
+  servlet: # Servlet配置
+    multipart: # 文件上传配置
+      max-file-size: 10MB # 单个文件的最大大小 (10MB)
+      max-request-size: 10MB # 整个请求的最大大小 (10MB)
+      enabled: true # 是否启用文件上传功能
+  profiles: # 环境配置
+    active: local # 激活的环境
+
+wuledi:
+  storage: # 存储配置
+    qiniu: # 七牛云存储配置
+      enabled: true
+      access-key: xxxx # 密钥ID
+      secret-key: xxxx # 密钥KEY
+      domain: xxxx # 域名
+      bucket: xxxx # 存储桶
+    tencent: # 腾讯云存储配置
+      enabled: true
+      domain: xxxx # 域名
+      secret-id: xxxx # 密钥ID
+      secret-key: xxxx # 密钥KEY
+      region: xxxx # 地域
+      bucket: xxxx # 存储桶

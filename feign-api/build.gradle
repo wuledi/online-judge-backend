@@ -1,0 +1,7 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web' // Web依赖,用于web开发
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign' // Feign依赖,用于服务间调用
+    implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+    implementation 'com.baomidou:mybatis-plus-jsqlparser'
+}

@@ -1,0 +1,31 @@
+dependencies {
+    implementation project(':common:core')
+    implementation project(":service:user")
+    implementation project(":service:interface-info")
+
+    // SpringBoot依赖
+    implementation 'org.springframework.boot:spring-boot-starter-web' // Web依赖,用于web开发
+
+    // ---- Swagger相关依赖 ----
+    // Swagger接口文档注解，用于标注API元数据
+    // https://github.com/swagger-api/swagger-core/
+    implementation 'io.swagger.core.v3:swagger-annotations'
+    // Swagger UI界面，提供在线API文档查看和调试功能
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui'
+
+    // ---- MyBatisPlus相关依赖 ----
+    // MyBatisPlus核心依赖，集成Spring Boot 3，提供增强的MyBatis功能
+    // https://baomidou.com/
+    implementation 'com.baomidou:mybatis-plus-spring-boot3-starter'
+    implementation 'com.baomidou:mybatis-plus-jsqlparser'
+
+    // Hutool全功能工具包：提供丰富的工具类（日期、字符串、文件、加密等），简化Java开发
+    // https://www.hutool.cn/docs
+    implementation 'cn.hutool:hutool-all'
+
+
+    // docker-java: 用于java操作docker的依赖
+    implementation 'com.github.docker-java:docker-java-core'
+    implementation 'com.github.docker-java:docker-java-transport-httpclient5'
+    implementation 'com.github.docker-java:docker-java'
+}

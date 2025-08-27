@@ -1,0 +1,60 @@
+server: # 服务端配置
+  port: 9501              # 监听端口
+spring: # Spring配置
+  application: # 应用配置
+    name: gateway          # 应用名称
+  cloud: # Spring Cloud配置
+    gateway: # 网关配置
+      server:
+        webflux:
+          globalcors:
+            add-to-simple-url-handler-mapping: true # 解决options请求被拦截问题
+            cors-configurations: # todo 注意禁用下游跨域跨域
+              '[/**]':
+                #                allowedOrigins: "*"  # 允许哪些网站的跨域请求
+                allowedOriginPatterns: "*"  # 允许哪些网站
+                allowedMethods: # 允许的跨域ajax的请求方式
+                  - "GET"
+                  - "POST"
+                  - "DELETE"
+                  - "PUT"
+                  - "OPTIONS"
+                allowedHeaders: "*" # 允许在请求中携带的头信息
+                allowCredentials: true # 是否允许携带cookie
+                maxAge: 360000 # 这次跨域检测的有效期
+          discovery: # 服务发现
+            locator: # 资源定位
+              enabled: true            # 通过服务发现查找其他微服务
+          routes: # 路由配置
+            - id: provider # 路由id
+              #              uri: http://127.0.0.1:8080 # 目标服务地址,绑定单一URI路径资源
+              uri: lb://provider # 使用负载均衡协议
+              predicates: # 断言, 用于匹配请求
+                - Path=/api/** # 匹配指定路径
+              #            - After=2025-01-01T21:15:32+08:00[Asia/Shanghai]  # 指定日期时间之后访问
+              #            - Cookie=wuledi-key,zhixinglu\\-\\w+ # Cookie匹配, 匹配Cookie中的wuledi-key值,todo 有问题
+              #            - Header=X-Wuledi-Request-Id, \d+ # 匹配头信息
+              #            - Host=gateway-**, **.wuledi.com # 特定主机访问
+              #            - Method=GET # 指定请求模式
+              #            - Query=msg, wuledi-\w+ # 地址重写参数判断
+              #            - DefaultTimeSubsection=08:00,16:00,20:00,24:00   # 列表项
+              #          filters: # 过滤器, 用于处理请求
+              #            - AddRequestHeader=Request-Token-Wuledi,www.wuledi.com # 添加头信息,此信息会被转发到目标服务
+
+knife4j:
+  # 聚合swagger文档: http://{gateway.host}:{gateway.port}/doc.html
+  gateway:
+    enabled: true # 开启gateway聚合组件
+    #    strategy: discover # 设置聚合模式采用discover服务发现的模式
+    #    discover:
+    #      enabled: true # 开启discover模式
+    #      version: swagger2 # 聚合子服务全部为Swagger2规范的文档
+    tags-sorter: order
+    operations-sorter: order
+    # 指定手动配置的模式(默认为该模式)
+    strategy: manual
+    routes:
+      - name: 单体服务
+        url: /provider/v3/api-docs/default
+        service-name: provider
+        order: 1

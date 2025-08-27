@@ -1,0 +1,354 @@
+// build.gradle: 项目构建文件
+buildscript {// 这个块用来配置构建脚本所需的依赖，比如插件等。
+    repositories {// 脚本资源仓库
+        maven {
+            url "https://repo.spring.io/milestone"
+            name "Spring Milestones"
+        }
+
+        maven {
+            url 'https://maven.aliyun.com/repository/public'
+            name "Aliyun Repository"
+        }
+
+        maven {
+            credentials {
+                username aliyun_maven_username
+                password aliyun_maven_password
+            }
+            url 'https://packages.aliyun.com/68281d2660376e0e7125c332/maven/2539411-snapshot-jvbgqw'
+            name "Aliyun Private Repository"
+        }
+    }
+    dependencies {// 构建脚本依赖
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:3.5.5' // SpringBoot构建插件
+    }
+}
+
+plugins { // 插件配置
+    // 格式: id:插件名 version:版本号
+    id 'java' // 引入java插件,提供jar相关操作
+    id 'idea' // 引入idea插件,提供idea相关操作
+    id 'maven-publish' // 引入maven插件,提供maven相关操作
+    id 'org.springframework.boot' version '3.5.5' // SpringBoot插件
+    id 'io.spring.dependency-management' version '1.1.7' // 依赖管理插件
+}
+
+// 项目信息
+group project_group // 项目组名,依据命名空间
+version project_version // 项目版本
+def projectArtifactId = artifact_id // 项目artifactId
+
+allprojects { // 对父模块和子模块都起用以下配置
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'maven-publish'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    // 阿里云云效发布配置
+    afterEvaluate {
+        publishing {
+            publications {
+                plugin(MavenPublication) {
+                    from components.java
+                    groupId = project.group
+                    artifactId = projectArtifactId
+                    version = project.version
+                }
+            }
+            repositories {
+                maven {
+                    url = 'https://packages.aliyun.com/68281d2660376e0e7125c332/maven/2539411-snapshot-jvbgqw'
+                    credentials {
+                        username = aliyun_maven_username
+                        password = aliyun_maven_password
+                    }
+                }
+            }
+        }
+    }
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(project_jdk)
+        }
+    }
+
+    configurations { // 配置,通常指的是系统、应用程序或服务的设置和参数
+        compileOnly { // 编译时依赖: 编译时自动生成class文件
+            // extendsFrom表示继承自某个配置, 比如继承自annotationProcessor
+            // annotationProcessor: 注解处理器
+            extendsFrom annotationProcessor // 依赖注解
+        }
+    }
+
+    repositories { // 仓库配置
+        // 定义了两个仓库的URL: 阿里云的Maven中央仓库和JCenter仓库的URL
+        def ALIYUN_REPOSITORY_URL = 'https://maven.aliyun.com/nexus/content/groups/public'
+        def ALIYUN_JCENTER_URL = 'https://maven.aliyun.com/nexus/content/repositories/jcenter'
+        configureEach {
+                // 替换默认仓库: 通过configureEach方法遍历已有的仓库列表,并替换掉默认的Maven中央仓库和JCenter仓库
+            ArtifactRepository repo -> // 遍历仓库列表
+                if (repo instanceof MavenArtifactRepository) { // 判断仓库是否是MavenArtifactRepository类型
+                    def url = repo.url.toString() // 获取仓库的URL
+                    // 检查仓库的URL是否以https://repo1.maven.org/maven2
+                    if (url.startsWith('https://repo1.maven.org/maven2')) {
+                        // 替换为阿里云的Maven中央仓库, 并记录日志
+                        project.logger.lifecycle "Repository ${repo.url} replaced by $ALIYUN_REPOSITORY_URL."
+                        remove repo // 移除默认的仓库
+                    }
+                    // 检查仓库的URL是否以https://jcenter.bintray.com
+                    if (url.startsWith('https://jcenter.bintray.com/')) {
+                        // 替换为阿里云的JCenter仓库, 并记录日志
+                        project.logger.lifecycle "Repository ${repo.url} replaced by $ALIYUN_JCENTER_URL."
+                        remove repo // 移除默认的仓库
+                    }
+                }
+        }
+        maven { url ALIYUN_REPOSITORY_URL } // 设置阿里云仓库
+        maven { url ALIYUN_JCENTER_URL } // 设置阿里云仓库
+
+        // 阿里云私有仓库 https://packages.aliyun.com/maven/2539411-snapshot-JvbGQW/guide
+        maven {
+            url 'https://maven.aliyun.com/repository/public'
+        }
+
+        maven {
+            credentials {
+                username aliyun_maven_username
+                password aliyun_maven_password
+            }
+            url 'https://packages.aliyun.com/68281d2660376e0e7125c332/maven/2539411-snapshot-jvbgqw'
+        }
+    }
+
+    dependencyManagement { // 依赖管理, 管理项目依赖
+        imports {
+            mavenBom 'org.springframework.cloud:spring-cloud-dependencies:2025.0.0'
+            mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2023.0.3.3"
+        }
+
+        dependencies {
+            // ==== springframework ====
+            dependency 'org.springframework:spring-context:6.2.10'
+
+            // ==== 认证与授权相关依赖 ====
+            // ---- JWT ----
+            dependency 'io.jsonwebtoken:jjwt-api:0.12.6' // JWT API
+            dependency 'io.jsonwebtoken:jjwt-impl:0.12.6' // JWT实现
+            dependency 'io.jsonwebtoken:jjwt-gson:0.12.6' // JWT与Gson的集成
+
+            // ==== web ====
+            // ---- Swagger相关依赖 ----
+            dependency 'io.swagger.core.v3:swagger-annotations:2.2.30' // Swagger接口文档注解，用于标注API元数据
+            dependency 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8'// Swagger UI界面，提供在线API文档查看和调试功能
+            // ---- 序列化相关依赖 ----
+            dependency 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.19.2' // Jackson依赖: 用于JSON序列化和反序列化
+            dependency 'com.alibaba:fastjson:2.0.58'  // FastJSON2：阿里巴巴的高性能JSON库，提供快速的JSON序列化和反序列化功能
+            dependency 'com.alibaba.fastjson2:fastjson2:2.0.58' // FastJSON依赖
+            dependency 'com.alibaba.fastjson2:fastjson2-extension-spring6:2.0.58' // FastJSON依赖
+            dependency 'com.esotericsoftware:kryo:5.6.2'
+            // ==== jakarta  ====
+            // ---- 注解相关依赖 ----
+            dependency 'jakarta.annotation:jakarta.annotation-api:3.0.0'
+            dependency 'jakarta.validation:jakarta.validation-api:3.1.1'
+
+
+
+
+            // ==== 数据库 ====
+            // ---- MyBatisPlus相关依赖 ----
+            dependency 'com.baomidou:mybatis-plus-spring-boot3-starter:3.5.12'// MyBatisPlus依赖
+            dependency 'com.baomidou:mybatis-plus-jsqlparser:3.5.12' // MyBatisPlus依赖--分页
+            dependency 'com.mysql:mysql-connector-j:8.4.0' // MySQL数据库驱动，用于JDBC连接MySQL数据库
+            dependency 'com.alibaba:druid-spring-boot-starter:1.2.24' // Druid数据库连接池依赖
+            dependency 'org.mapstruct:mapstruct:1.6.3' // MapStruct映射工具
+            dependency 'org.mapstruct:mapstruct-processor:1.6.3' // MapStruct映射工具
+            // ---- Redis相关依赖 ----
+            dependency 'redis.clients:jedis:6.0.0' // Jedis依赖： 用于Redis操作
+            dependency 'org.redisson:redisson-spring-boot-starter:3.51.0' // Redisson依赖: 用于分布式锁
+            // Spring Session与Redis集成：将HTTP会话（Session）数据存储到Redis中，实现分布式Session共享
+            dependency 'org.springframework.session:spring-session-data-redis:3.5.1'
+            dependency 'com.github.ben-manes.caffeine:caffeine:3.2.0' // Caffeine依赖: 用于缓存
+
+
+            // ==== 消息队列相关依赖 ====
+            // ---- kafka ----
+            dependency 'org.springframework.kafka:spring-kafka:3.3.9'
+            dependency 'org.springframework.kafka:spring-kafka-test:3.3.9'
+
+            // ==== 工具类相关依赖 ====
+            // ---- hutool ----
+            dependency 'cn.hutool:hutool-all:5.8.37' // Hutool全功能工具包：提供丰富的工具类（日期、字符串、文件、加密等），简化Java开发
+            // ---- Apache ----
+            // Apache Commons Lang工具包，提供字符串、数组、日期等操作的实用方法
+            dependency 'org.apache.commons:commons-lang3:3.17.0'
+            // Apache Commons IO工具包，用于文件、流、字符串等操作
+            dependency 'commons-io:commons-io:2.19.0'
+            // Apache Commons Pool2：用于管理对象池，实现对象池的创建、获取、释放等操作
+            dependency 'org.apache.commons:commons-pool2:2.12.1'
+            // ---- ASCII艺术生成库  ----
+            dependency 'com.github.lalyos:jfiglet:0.0.9'
+            // ---- docker-java ----
+            dependency 'com.github.docker-java:docker-java-core:3.5.1'
+            dependency 'com.github.docker-java:docker-java-transport-httpclient5:3.5.1'
+            dependency 'com.github.docker-java:docker-java:3.5.1'
+            // ---- jsoup解析器：用于解析HTML和XML文档 ----
+            dependency 'org.jsoup:jsoup:1.19.1'
+            // ---- PDF 生成库 ----
+            dependency 'com.itextpdf:itext-core:9.1.0' // 核心库
+            dependency 'com.itextpdf:font-asian:9.1.0' // 支持中文字体
+            dependency 'org.lionsoul:ip2region:2.7.0' // IP地址查询
+            dependency 'org.apache.pdfbox:pdfbox:2.0.29' // PDFBo
+
+            // ==== 文件存储相关依赖 ====
+            dependency 'com.qiniu:qiniu-java-sdk:7.18.0' // 引入七牛云SDK
+            dependency 'com.qcloud:cos_api:5.6.245' // 腾讯云COS依赖
+
+            // ------ 定时任务相关依赖 ----
+            // ShedLock核心库：提供分布式任务调度锁定功能，确保分布式环境下的定时任务不重复执行
+            dependency 'net.javacrumbs.shedlock:shedlock-spring:6.3.0'
+            // ShedLock Redis集成：使用Redis作为ShedLock的分布式锁存储后端，配合Spring框架使用
+            dependency 'net.javacrumbs.shedlock:shedlock-provider-redis-spring:6.3.0'
+
+
+            // ==== 语言模型相关依赖 ====
+            // VolcEngine SDK：用于Java开发，提供VolcEngine的云服务API的封装，支持快速开发
+            dependency 'com.volcengine:volcengine-java-sdk-ark-runtime:0.2.20'
+            // 阿里巴巴DashScope SDK：提供了与DashScope平台的集成，支持生成文本、图片、音频等内容
+            dependency 'com.alibaba:dashscope-sdk-java:2.20.6'
+            // LangChain4j：提供了与DashScope平台的集成，支持生成文本、图片、音频等内容
+            dependency 'dev.langchain4j:langchain4j-community-dashscope:1.0.0-beta5'
+
+            // ==== Spring Ai  ====
+            dependency 'org.springframework.ai:spring-ai-model:1.0.0'
+            dependency 'org.springframework.ai:spring-ai-bom:1.0.0'
+            dependency 'org.springframework.ai:spring-ai-starter-model-openai:1.0.0'
+            dependency 'org.springframework.ai:spring-ai-starter-mcp-server:1.0.0'
+            dependency 'org.springframework.ai:spring-ai-starter-mcp-client:1.0.0'// https://mcp.so/ MCP 模型服务中心
+            dependency 'org.springframework.ai:spring-ai-starter-mcp-client-webflux:1.0.0' // mcp客户端依赖
+            dependency 'org.springframework.ai:spring-ai-model:1.0.0'
+            dependency 'org.springframework.ai:spring-ai-rag:1.0.0'
+            dependency 'org.springframework.ai:spring-ai-client-chat:1.0.0'
+            dependency 'org.springframework.ai:spring-ai-markdown-document-reader:1.0.0'
+            dependency 'org.springframework.ai:spring-ai-advisors-vector-store:1.0.0'
+            dependency 'org.springframework.ai:spring-ai-pgvector-store:1.0.0'
+            dependency 'org.springframework.ai:spring-ai-starter-vector-store-pgvector:1.0.0'
+            dependency 'org.springframework.ai:spring-ai-starter-model-ollama:1.0.0'
+            dependency 'org.springframework.ai:spring-ai-starter-model-deepseek:1.0.0'
+            dependency 'org.springframework.ai:spring-ai-starter-model-zhipuai:1.0.0'
+            dependency 'org.springframework.ai:spring-ai-retry:1.0.0'
+            dependency 'org.springframework.ai:spring-ai-test:1.0.0'
+            dependency 'org.springframework.ai:spring-ai-autoconfigure-model-tool:1.0.0'
+            dependency 'org.springframework.ai:spring-ai-autoconfigure-retry:1.0.0'
+            dependency 'org.springframework.ai:spring-ai-autoconfigure-model-chat-observation:1.0.0'
+
+            // ==== Spring Ai Alibaba ====
+            dependency 'com.alibaba.cloud.ai:spring-ai-alibaba-bom:1.0.0.2'
+            dependency 'com.alibaba.cloud.ai:spring-ai-alibaba-starter-dashscope:1.0.0.2'
+            dependency 'com.alibaba.cloud.ai:spring-ai-alibaba-starter-memory:1.0.0.2'
+            dependency 'com.alibaba.cloud.ai:spring-ai-alibaba-starter-memory-jdbc:1.0.0.2'
+            dependency 'com.alibaba.cloud.ai:spring-ai-alibaba-starter-memory-redis:1.0.0.2'
+
+            // ==== 微服务 ====
+            // ---- 微服务相关依赖 ----
+            dependency 'com.github.xiaoymin:knife4j-gateway-spring-boot-starter:4.5.0' // Knife4j网关依赖
+            dependency 'com.alibaba.nacos:nacos-client:3.0.2' // Nacos客户端依赖
+            dependency 'io.github.openfeign:feign-okhttp:13.6' // Feign OkHttp依赖
+        }
+    }
+
+    dependencies { // 配置依赖项
+        /*
+               implementation:表示实现依赖
+               格式: 'group:name:version',group表示模块名,name表示模块名,version表示版本号(不带版本号表示默认最新版本)
+               另一种写法: implementation group: 'group', name: 'name', version: 'version'
+               compileOnly: 表示编译时依赖
+               runtimeOnly: 表示运行时依赖
+               annotationProcessor: 表示注解处理器依赖
+               testImplementation: 表示测试时依赖
+               testRuntimeOnly: 表示测试运行时依赖
+               providedRuntime: 表示运行时依赖, 但是在打包时排除
+               providedCompile: 表示编译时依赖, 但是在打包时排除
+        */
+
+        developmentOnly 'org.springframework.boot:spring-boot-devtools' // 开发时自动编译,热部署
+
+        // junit 以下的配置为与项目用例测试有关的依赖
+        testImplementation('org.springframework.boot:spring-boot-starter-test') { // SpringBoot测试依赖,用于单元测试
+            exclude group: 'junit', module: 'junit'// 排除JUnit 4.x依赖
+        }
+        // JUnit相关依赖,设置版本报错
+        testImplementation(enforcedPlatform('org.junit:junit-bom'))// 强制绑定JUnit 5
+        testImplementation 'org.junit.jupiter:junit-jupiter-api' // // JUnit 5 API
+        testImplementation 'org.junit.jupiter:junit-jupiter-engine' // JUnit 5核心库
+        testImplementation 'org.junit.vintage:junit-vintage-engine' // JUnit vintage引擎
+        testImplementation 'org.junit.platform:junit-platform-launcher' // JUnit 平台启动器
+        // 测试代码 Lombok 支持 (关键配置)
+        testCompileOnly 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
+
+        // Lombok依赖,简化Java代码,注解处理
+        compileOnly 'org.projectlombok:lombok' // 生成getter/setter等代码
+        annotationProcessor 'org.projectlombok:lombok' // Lombok注解处理器
+
+    }
+}
+
+subprojects { // 子项目配置
+    // System.getProperty() 获取系统属性,env为环境变量,dev为开发环境
+//def env = System.getProperty("env") ?: 'dev' // 获取env环境属性, 没有则默认为dev
+    def env = project.hasProperty('env') ? project.properties['env'] : 'default'
+    sourceSets {    // 源代码目录配置
+        main { // main及相关子目录配置
+            java { srcDirs = ['src/main/java'] } // 指定Java源代码目录为src/main/java。
+            // 指定资源文件目录为src/main/resources和src/main/profiles/$env。
+            resources { srcDirs = ['src/main/resources', 'src/main/view'] }
+        }
+        test { // test及相关子目录配置
+            //  java { srcDirs = ['src/test/java'] } // 指定Java测试源代码目录为src/test/java。
+            //  resources { srcDirs = ['src/test/resources'] } // 指定资源文件目录为src/test/resources。
+            java.srcDirs = ['src/test/java']
+            resources.srcDirs = ['src/test/resources']
+        }
+    }
+    tasks.named('test') {// 任务配置,.named('test'){}表示配置test任务
+        useJUnitPlatform() // 使用JUnit5
+    }
+// 最终生成的jar文件名称: baseName-version-classifier.extension
+    tasks.register('sourceJar', Jar) {
+        dependsOn classes // 源代码的打包任务
+        archiveClassifier = 'sources' // 设置文件的后缀
+        from sourceSets.main.allSource // 所有源代码的读取路径
+    }
+    tasks.register('javadocTask', Javadoc) { // JavaDoc文档打包任务
+        options.encoding = 'UTF-8' // 设置文件编码
+        source = sourceSets.main.allJava // 定义所有的Java源代码
+    }
+    tasks.register('javadocJar', Jar) {
+        dependsOn javadocTask // 先生成JavaDoc再打包
+        archiveClassifier = 'javadoc' // 文件标记类型
+        from javadocTask.destinationDir // 通过JavadocTask任务中找到目标路径
+    }
+    tasks.withType(Javadoc).configureEach {   // 文档编码配置
+        options.encoding = 'UTF-8' // 定义编码
+    }
+    tasks.withType(JavaCompile).configureEach {   // 编译编码配置
+        options.encoding = 'UTF-8' // 定义编码
+    }
+    artifacts { // 最终的打包的操作任务
+        archives sourceJar // 源代码打包
+        archives javadocJar // javadoc打包
+    }
+    gradle.taskGraph.whenReady {    // 在所有的操作准备好后触发
+        tasks.each { task ->    // 找出所有的任务
+            if (task.name.contains('test')) {   // 如果现在发现有test任务
+                // 如果将enabled设置为true表示要执行测试任务,如果设置为false表示不执行测试任务
+                task.enabled = true
+            }
+        }
+    }
+
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8' // 编码配置
+}

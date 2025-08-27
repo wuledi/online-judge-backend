@@ -1,0 +1,18 @@
+dependencies {
+    implementation project(':common:core')
+    // SpringBoot依赖
+    implementation 'org.springframework.boot:spring-boot-starter'
+
+    // SpringAi依赖
+    implementation 'org.springframework.ai:spring-ai-model'
+
+    // Hutool依赖
+    implementation 'cn.hutool:hutool-all'
+
+    // tool 依赖
+    // jsoup HTML 解析库
+    implementation 'org.jsoup:jsoup'
+    // PDF 生成库
+    implementation 'com.itextpdf:itext-core' // 核心库
+    implementation 'com.itextpdf:font-asian' // 支持中文字体
+}

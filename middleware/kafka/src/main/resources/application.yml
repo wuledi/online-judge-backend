@@ -1,0 +1,37 @@
+server: # 服务器配置
+  port: 18086  # 端口
+  servlet: # 新增 servlet 节点
+    context-path: / # 应用上下文路径
+    session: # session配置:
+      cookie: # cookie配置
+        max-age: 2592000 # cookie最大存活时间，单位: 秒
+spring: # Spring配置
+  application: # 应用配置
+    name: middleware-kafka # 应用名称
+  profiles:
+    active: local
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092  # kafka服务器地址
+    listener: # 配置消息监听器
+      ack-mode: manual # 开启消息监听的手动确认模式
+      type: batch  # 设置批量消费，默认是单个消息消费
+    template: # 配置模板默认的主题topic名称
+      default-topic: defaultTopic
+      default-group-id: defaultGroup
+    producer: # 配置生产者
+      # key默认是StringSerializer.class序列化，
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # value默认是StringSerializer.class序列化，
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      retries: 3 # 重试次数
+      acks: 1 # 确认级别
+      batch-size: 16384 # 批量大小
+      buffer-memory: 33554432 # 缓存大小
+    consumer: #配置消费者
+      max-poll-records: 20 # 批量消费每次最多消费多少条消息
+      auto-offset-reset: earliest # earliest #从第一条消息开始接收
+      group-id: ${spring.application.name}-group  # 添加组ID
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        spring.json.trusted.packages: '*'  # 允许所有包的反序列化

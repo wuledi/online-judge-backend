@@ -1,0 +1,15 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web' // Web依赖,用于web开发
+
+    implementation 'com.alibaba.cloud.ai:spring-ai-alibaba-starter-memory'
+    implementation 'com.alibaba.cloud.ai:spring-ai-alibaba-starter-memory-jdbc'
+    implementation 'com.alibaba.cloud.ai:spring-ai-alibaba-starter-memory-redis'
+
+    // ---- Redis相关依赖 ----
+    implementation 'redis.clients:jedis' // Jedis依赖： 用于Redis操作
+    runtimeOnly 'com.mysql:mysql-connector-j' // MySQL数据库驱动，用于JDBC连接MySQL数据库
+
+
+    // Kryo序列化框架：用于对象的序列化和反序列化，提高性能。支持文件会话记忆持久化的序列化
+    implementation 'com.esotericsoftware:kryo'
+}

@@ -1,0 +1,10 @@
+dependencies {
+    implementation project(":common:core")
+
+    // ---- MyBatisPlus相关依赖 ----
+    // MyBatisPlus核心依赖，集成Spring Boot 3，提供增强的MyBatis功能
+    implementation 'com.baomidou:mybatis-plus-spring-boot3-starter'
+    implementation 'com.baomidou:mybatis-plus-jsqlparser'
+    implementation 'com.alibaba:druid-spring-boot-starter' // Druid数据库连接池依赖
+    runtimeOnly 'com.mysql:mysql-connector-j' // MySQL数据库驱动，用于JDBC连接MySQL数据库
+}

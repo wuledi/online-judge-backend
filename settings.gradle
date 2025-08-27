@@ -1,0 +1,54 @@
+rootProject.name = 'online-judge-backend'
+
+include 'common'
+include 'common:core'
+include 'common:web'
+include 'common:security'
+
+// 基础模块
+include 'base'
+include 'base:notification'
+include 'base:storage'
+
+// AI 模块
+include 'ai'
+include 'ai:ai-invoke-example'
+include 'ai:dashscope'
+include 'ai:mcp'
+include 'ai:tool'
+include 'ai:rag'
+include 'ai:memory'
+include 'ai:manus'
+
+// 中间件
+include 'middleware'
+include 'middleware:redis' // redis 缓存
+include 'middleware:kafka' // kafka消息队列
+
+// ORM 对象关系映射
+include 'orm'
+include 'orm:mybatis-plus'
+
+//  服务
+include 'service'
+include 'service:user'
+include 'service:chat'
+include 'service:article'
+include 'service:dynamic-task'
+include 'service:interface-info'
+include 'service:code-sandbox'
+include 'service:question'
+include 'service:judge'
+include 'service:meta-search'
+
+
+// SDK模块
+include 'sdk'
+include 'sdk:code-sandbox-sdk'
+
+// 服务提供者
+include 'provider'
+
+// 微服务模块
+include 'gateway'
+include 'feign-api'

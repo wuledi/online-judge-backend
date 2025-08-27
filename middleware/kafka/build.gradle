@@ -1,0 +1,9 @@
+dependencies {
+    implementation project(":common:core")
+
+    // SpringBoot依赖
+    implementation 'org.springframework.boot:spring-boot-starter-web' // Web依赖,用于web开发
+    implementation 'org.springframework.boot:spring-boot-starter-json' // JSON依赖,用于处理JSON数据
+    implementation 'org.springframework.kafka:spring-kafka'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+}

@@ -1,0 +1,42 @@
+dependencies {
+    implementation project(':common:core')
+    implementation project(":common:web")
+    implementation project(':common:security')
+    implementation project(':orm:mybatis-plus')
+    implementation project(':middleware:redis')
+    implementation project(':middleware:kafka')
+
+
+    // SpringBoot依赖
+    implementation 'org.springframework.boot:spring-boot-starter-web' // Web依赖,用于web开发
+    // Spring Security：用于保护Spring应用程序的认证、授权和认证管理
+    implementation 'org.springframework.boot:spring-boot-starter-security' // Spring Security依赖
+    implementation 'org.springframework.kafka:spring-kafka:3.3.7'
+    testImplementation 'org.springframework.kafka:spring-kafka-test:3.3.7'
+
+    // ---- MyBatisPlus相关依赖 ----
+    // MyBatisPlus核心依赖，集成Spring Boot 3，提供增强的MyBatis功能
+    // https://baomidou.com/
+    implementation 'com.baomidou:mybatis-plus-spring-boot3-starter'
+    implementation 'com.baomidou:mybatis-plus-jsqlparser'
+    implementation 'com.alibaba:druid-spring-boot-starter' // Druid数据库连接池依赖
+    runtimeOnly 'com.mysql:mysql-connector-j' // MySQL数据库驱动，用于JDBC连接MySQL数据库
+    implementation 'org.mapstruct:mapstruct' // MapStruct映射工具
+    implementation 'org.mapstruct:mapstruct-processor' // MapStruct映射工具
+    annotationProcessor 'org.mapstruct:mapstruct-processor'
+
+    // 分布式锁 -- 用于分布式场景下的并发控制Redis,能像本地操作集合一样操作Redis
+    implementation 'org.redisson:redisson-spring-boot-starter' // Redisson依赖: 用于分布式锁
+    implementation 'com.github.ben-manes.caffeine:caffeine' // Caffeine依赖: 用于缓存
+
+    // ---- Swagger相关依赖 ----
+    // Swagger接口文档注解，用于标注API元数据
+    // https://github.com/swagger-api/swagger-core/
+    implementation 'io.swagger.core.v3:swagger-annotations'
+    // Swagger UI界面，提供在线API文档查看和调试功能
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui'
+
+    // Hutool全功能工具包：提供丰富的工具类（日期、字符串、文件、加密等），简化Java开发
+    // https://www.hutool.cn/docs
+    implementation 'cn.hutool:hutool-all'
+}

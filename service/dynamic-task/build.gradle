@@ -1,0 +1,28 @@
+dependencies {
+    implementation project(':common:core')
+    implementation project(":common:web")
+    implementation project(':common:security')
+    implementation project(':orm:mybatis-plus')
+
+
+    // SpringBoot依赖
+    implementation 'org.springframework.boot:spring-boot-starter-web' // Web依赖,用于web开发
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // ---- MyBatisPlus相关依赖 ----
+    // MyBatisPlus核心依赖，集成Spring Boot 3，提供增强的MyBatis功能
+    // https://baomidou.com/
+    implementation 'com.baomidou:mybatis-plus-spring-boot3-starter'
+    implementation 'com.baomidou:mybatis-plus-jsqlparser'
+    implementation 'com.alibaba:druid-spring-boot-starter' // Druid数据库连接池依赖
+    runtimeOnly 'com.mysql:mysql-connector-j' // MySQL数据库驱动，用于JDBC连接MySQL数据库
+    implementation 'org.mapstruct:mapstruct' // MapStruct映射工具
+    implementation 'org.mapstruct:mapstruct-processor' // MapStruct映射工具
+    annotationProcessor 'org.mapstruct:mapstruct-processor'
+
+    // ---- Swagger相关依赖 ----
+    implementation 'io.swagger.core.v3:swagger-annotations'
+
+
+
+}

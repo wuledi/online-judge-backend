@@ -1,0 +1,27 @@
+server: # 服务器配置
+  port: 18082  # 端口
+  servlet: # 新增 servlet 节点
+    context-path: / # 应用上下文路径
+    session: # session配置:
+      cookie: # cookie配置
+        max-age: 2592000 # cookie最大存活时间，单位: 秒
+spring: # Spring配置
+  application: # 应用配置
+    name: common-web # 应用名称
+  profiles:
+    active: local
+
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui: # swagger-ui配置 swagger-ui/index.html
+    path: /swagger-ui.html # swagger-ui路径
+    tags-sorter: alpha # 标签排序,alpha按字母排序
+    operations-sorter: alpha # 操作排序
+    enabled: true # 是否启用swagger-ui
+  api-docs: # api-docs配置
+    path: /v3/api-docs # api-docs路径
+    enabled: true # 是否启用api-docs
+  group-configs: # 分组配置
+    - group: 'default' # 分组名称
+      paths-to-match: '/**' # 匹配路径, 表示所有路径都匹配
+      packages-to-scan: com.wuledi # 扫描包路径

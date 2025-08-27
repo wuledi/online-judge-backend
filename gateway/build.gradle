@@ -1,0 +1,17 @@
+dependencies {
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+
+    implementation 'com.github.xiaoymin:knife4j-gateway-spring-boot-starter:4.5.0'
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap' // Spring Cloud Bootstrap依赖
+    implementation('com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery') {
+        exclude group: 'com.alibaba.nacos', module: 'nacos-client' // 删除nacos-client
+    }
+    implementation('com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config') { // Nacos配置中心依赖
+        exclude group: 'com.alibaba.nacos', module: 'nacos-client' // 删除nacos-client
+    }
+    implementation 'com.alibaba.nacos:nacos-client' // Nacos客户端依赖
+    implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel' // Sentinel依赖
+}

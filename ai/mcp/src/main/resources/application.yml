@@ -1,0 +1,9 @@
+server: # 服务器配置
+  port: 28084  # 端口
+  servlet: # 新增 servlet 节点
+    context-path: / # 应用上下文路径
+spring:
+  application:
+    name: ai-mcp
+  profiles:
+    active: sse

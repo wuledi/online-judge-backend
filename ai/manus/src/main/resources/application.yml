@@ -1,0 +1,99 @@
+server: # 服务器配置
+  port: 28087  # 端口
+  servlet: # 新增 servlet 节点
+    context-path: / # 应用上下文路径
+spring: # Spring配置
+  application: # 应用配置
+    name: ai-manus # 应用名称
+  profiles: # 环境配置
+    active: local # 激活的环境
+  session: # session配置
+    timeout: 2592000 # session超时时间，单位: 秒
+    redis: # redis配置
+      namespace: spring:session # Redis 中的命名空间
+  ai:
+    dashscope:
+      api-key: sk-xxxx
+      chat:
+        options:
+          model: qwen-plus
+          parameters: 0.7
+    mcp: # 不需要引入mcp工具模块
+      client:
+        #        sse: # sse 模式，可连接时启动
+        #          connections:
+        #            server1:
+        #              url: http://localhost:8127
+        stdio: # stdio 模式, todo 操作本地jar包启动异常
+          servers-configuration: classpath:mcp-servers.json # 服务器配置文件路径,linux环境需要修改
+    memory:
+      redis:
+        host: 127.0.0.1
+        port: 6379
+        password: xxxx
+        timeout:  5000
+    chat:
+      memory:
+        repository:
+          jdbc:
+            mysql:
+              jdbc-url: jdbc:mysql://127.0.0.1:3306/information_wuledi?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&allowMultiQueries=true&tinyInt1isBit=false&allowLoadLocalInfile=true&allowLocalInfile=true&allowUrl
+              username: root
+              password: xxxx
+              driver-class-name: com.mysql.cj.jdbc.Driver  # 配置MySQL的驱动程序类
+              enabled: true
+  datasource: # 数据源配置
+    driver-class-name: com.mysql.cj.jdbc.Driver  # 配置MySQL的驱动程序类
+    url: jdbc:mysql://127.0.0.1:3306/information_wuledi?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true # 数据库地址
+    username: root         # 数据库用户名
+    password: xxxx        # 数据库连接密码
+  data: # 数据配置
+    redis: # redis配置
+      host: 127.0.0.1 # 主机
+      port: 6379 # 端口
+      password: xxxx # 密码
+      database: 0 # 数据库
+      lettuce: # lettuce配置
+        pool: # 连接池配置
+          max-active: 10 # 最大连接数
+          max-idle: 5 # 最大空闲连接数
+          min-idle: 0 # 最小空闲连接数
+          max-wait: 1s # 最大等待时间
+          time-between-eviction-runs: 2000    # 每2s回收一次空闲连接
+
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui: # swagger-ui配置 swagger-ui/index.html
+    path: /swagger-ui.html # swagger-ui路径
+    tags-sorter: alpha # 标签排序,alpha按字母排序
+    operations-sorter: alpha # 操作排序
+    enabled: true # 是否启用swagger-ui
+  api-docs: # api-docs配置
+    path: /v3/api-docs # api-docs路径
+    enabled: true # 是否启用api-docs
+  group-configs: # 分组配置
+    - group: 'default' # 分组名称
+      paths-to-match: '/**' # 匹配路径, 表示所有路径都匹配
+      packages-to-scan: com.wuledi # 扫描包路径
+
+
+wuledi:
+  config: # 自定义配置项
+    jwt: # JWT相关配置
+      issuer: wuledi     # 证书签发人
+      secret: wuledi.xxxx      # 加密密钥（公共密钥）
+      expiry: 720       # 有效时长(小时)
+  ai:
+    tools:
+      yuque:
+        auth-token: xxxx
+      searchapi:
+        api-key: xxxx
+    memory: # 聊天记录缓存配置
+      type: redis # 缓存类型，支持：内存(memory)、mysql(mysql)、redis(redis)、文件(file)
+  sdk:
+    codesandbox:
+      gateway-host: https://api.url-hub.com
+      access-key: xxxx
+      secret-key: xxxx
+      version: 1.0.0

@@ -1,0 +1,82 @@
+/* 基础样式 */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: #f5f5f5;
+}
+
+/* 布局容器 */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* 标题样式 */
+.header {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.logo-image {
+    width: 150px;
+    height: auto;
+}
+
+/* 版权信息 */
+.copyright {
+    text-align: center;
+    margin: 2rem 0;
+    color: #666;
+}
+
+/* 项目信息 */
+.project-info p {
+    margin: 0.5rem 0;
+}
+
+/* 社交媒体 */
+.social-links a {
+    color: #333;
+    margin: 0 1rem;
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: #007bff;
+}
+
+/* 页脚 */
+.footer {
+    text-align: center;
+    padding: 1rem 0;
+    border-top: 1px solid #eee;
+    margin-top: 2rem;
+}
+/* 响应式基础 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 增强可读性 */
+.copyright p {
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+    .logo h1 {
+        font-size: 1.5rem;
+    }
+
+    .social-links a {
+        padding: 8px;
+    }
+}

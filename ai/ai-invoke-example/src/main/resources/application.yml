@@ -1,0 +1,31 @@
+server: # 服务器配置
+  port: 28081  # 端口
+  servlet: # 新增 servlet 节点
+    context-path: / # 应用上下文路径
+spring: # Spring配置
+  application: # 应用配置
+    name: ai-invoke-example # 应用名称
+  profiles:
+    active: local # 激活的配置文件
+  ai:
+    deepseek:
+      base-url: https://api.deepseek.com
+      api-key: sk-xxxx
+
+wuledi:
+  ai:
+    http-api:
+      url: https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation
+      api-key: sk-xxxx
+      model: qwen-plus
+    sdk:
+      volcengine-api:
+        api-key: xxxx
+        base-url: https://ark.cn-beijing.volces.com/api/v3
+        bot: bot-xxxx
+      dashscope-api:
+        api-key: sk-xxxx
+        model: qwen-plus
+    langchain4j:
+      dashscope:
+        api-key: sk-xxxx
