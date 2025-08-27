@@ -4,7 +4,7 @@
 
 官网: [https://wuledi.com](https://wuledi.com/)
 
-微服务版本：[https://github.com/wuledi/online-judge-microservice](https://github.com/wuledi/online-judge-microservice)
+前端+后端：[https://github.com/wuledi/oj](https://github.com/wuledi/oj)
 
 ## 功能特点
 
@@ -19,16 +19,16 @@
 
 ## 技术栈
 
-| 类别           | 技术组件                                               |
-| :------------- |:---------------------------------------------------|
-| **核心框架**   | Spring Boot 3.5.5, Spring Cloud Alibaba 2023.0.3.3 |
-| **安全认证**   | Spring Security, JWT                               |
+| 类别        | 技术组件                                               |
+|:----------|:---------------------------------------------------|
+| **核心框架**  | Spring Boot 3.5.5, Spring Cloud Alibaba 2023.0.3.3 |
+| **安全认证**  | Spring Security, JWT                               |
 | **数据持久化** | MySQL, MyBatis-Plus, Elasticsearch                 |
-| **中间件**     | Redis , RabbitMQ , Nacos                           |
-| **容器技术**   | Docker                                             |
-| **AI 集成**    | Spring AI Alibaba                                  |
-| **服务治理**   | Spring Cloud Gateway, OpenFeign                    |
-| **构建工具**   | Gradle                                             |
+| **中间件**   | Redis , RabbitMQ , Nacos                           |
+| **容器技术**  | Docker                                             |
+| **AI 集成** | Spring AI Alibaba                                  |
+| **服务治理**  | Spring Cloud Gateway, OpenFeign                    |
+| **构建工具**  | Gradle                                             |
 
 ## 快速开始
 
@@ -44,6 +44,7 @@
 - Nacos 2.5.1
 
 ### 运行项目
+
 - 单体：启动provider
 
 ```plaintext
